@@ -15,7 +15,7 @@ jobs:
         run: whoami
 
       - name: Show Kubernetes Nodes
-        run: kubectl get nodes
+        run: ssh orlando@192.168.1.210 "kubectl get nodes"
 
       - name: Show All Pods
-        run: kubectl get pods -A
+        run: ssh orlando@192.168.1.210 "kubectl get pods -A"
