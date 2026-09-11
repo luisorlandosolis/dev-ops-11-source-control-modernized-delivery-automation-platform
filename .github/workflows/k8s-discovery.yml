@@ -1,0 +1,21 @@
+name: Kubernetes Discovery
+
+on:
+  workflow_dispatch:
+
+jobs:
+  cluster-check:
+    runs-on: [self-hosted, jumpbox]
+
+    steps:
+      - name: Show Hostname
+        run: hostname
+
+      - name: Show Current User
+        run: whoami
+
+      - name: Show Kubernetes Nodes
+        run: kubectl get nodes
+
+      - name: Show All Pods
+        run: kubectl get pods -A
