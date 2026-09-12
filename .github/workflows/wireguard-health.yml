@@ -5,7 +5,9 @@ on:
 
 jobs:
   wireguard-health:
-    runs-on: self-hosted
+    runs-on:
+  - self-hosted
+  - jumpbox
 
     steps:
       - name: Show Hostname
