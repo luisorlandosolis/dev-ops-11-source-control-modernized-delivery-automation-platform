@@ -1,0 +1,25 @@
+name: Certificate Audit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  certificate-audit:
+    runs-on: self-hosted
+
+    steps:
+      - name: Show Hostname
+        run: hostname
+
+      - name: Show Date
+        run: date
+
+      - name: Display Runner Information
+        run: |
+          echo "Runner validation successful"
+          uname -a || ver
+
+      - name: Certificate Audit Placeholder
+        run: |
+          echo "Certificate audit workflow triggered"
+          echo "Next phase: integrate Security Action Center certificate checks"
