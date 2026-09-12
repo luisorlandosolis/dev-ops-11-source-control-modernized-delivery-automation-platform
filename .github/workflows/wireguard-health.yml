@@ -1,0 +1,20 @@
+name: WireGuard Health
+
+on:
+  workflow_dispatch:
+
+jobs:
+  wireguard-health:
+    runs-on: self-hosted
+
+    steps:
+      - name: Show Hostname
+        run: hostname
+
+      - name: Show Date
+        run: date
+
+      - name: Check WireGuard Status
+        run: |
+          echo "===== WireGuard Status ====="
+          wg show
