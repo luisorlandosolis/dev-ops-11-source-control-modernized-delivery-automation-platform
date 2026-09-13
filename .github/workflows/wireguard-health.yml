@@ -16,6 +16,14 @@ jobs:
       - name: Show Date
         run: date
 
+      - name: Read Vault Inventory
+        run: |
+          echo "===== Vault Inventory Validation ====="
+
+          ansible-vault view ~/ansible/inventory.ini \
+            --vault-password-file ~/.vault_pass | \
+            grep "^\[wg_"
+
       - name: Check WireGuard Health
         run: |
           echo "===== WireGuard Health ====="
