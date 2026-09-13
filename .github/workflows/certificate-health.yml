@@ -1,10 +1,10 @@
-name: ARC Kubernetes Validation
+name: ARC Certificate Discovery
 
 on:
   workflow_dispatch:
 
 jobs:
-  arc-validation:
+  certificate-discovery:
     runs-on: self-hosted
 
     steps:
@@ -16,8 +16,16 @@ jobs:
         run: |
           curl -LO "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl"
           chmod +x kubectl
-          ./kubectl version --client
+          sudo mv kubectl /usr/local/bin/kubectl 2>/dev/null || true
+          ./kubectl version --client || kubectl version --client
 
-      - name: Check Service Account
+      - name: Discover Certificates
         run: |
-          ls -la /var/run/secrets/kubernetes.io/serviceaccount/ || true
+          TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+          API_SERVER="https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}"
+
+          ./kubectl \
+            --server="$API_SERVER" \
+            --token="$TOKEN" \
+            --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+            get certificates -A
