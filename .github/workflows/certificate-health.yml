@@ -8,10 +8,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
+
       - name: Show Hostname
         run: hostname
 
-      - name: Check Kubectl
+      - name: Install kubectl
         run: |
-          which kubectl || true
-          kubectl version --client || true
+          curl -LO "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          ./kubectl version --client
+
+      - name: Check Service Account
+        run: |
+          ls -la /var/run/secrets/kubernetes.io/serviceaccount/ || true
