@@ -30,7 +30,7 @@ jobs:
           awk '
           /^\[wg_servers\]/ {s=1; next}
           /^\[/ {if(s){exit}}
-          s && NF {print}
+          s && NF && $1 !~ /^#/ {print}
           ' /tmp/inventory.txt
 
           echo ""
@@ -40,7 +40,7 @@ jobs:
           awk '
           /^\[wg_clients\]/ {s=1; next}
           /^\[/ {if(s){exit}}
-          s && NF {print}
+          s && NF && $1 !~ /^#/ {print}
           ' /tmp/inventory.txt
 
           rm -f /tmp/inventory.txt
