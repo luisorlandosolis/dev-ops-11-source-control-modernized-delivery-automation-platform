@@ -5,7 +5,9 @@ on:
 
 jobs:
   certificate-discovery:
-    runs-on: self-hosted
+    runs-on:
+      - self-hosted
+      - arc
 
     steps:
 
