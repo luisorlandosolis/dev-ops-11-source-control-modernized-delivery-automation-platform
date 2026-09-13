@@ -13,14 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Python Check
-        run: |
-          python3 --version
-          python3 -m pip --version
-
       - name: Install Dependencies
         run: |
-          python3 -m pip install --user pyyaml
+          apt-get update
+          apt-get install -y python3-pip
+          python3 -m pip install pyyaml
 
       - name: Infrastructure Health Check
         run: |
@@ -47,3 +44,4 @@ jobs:
 
           print(json.dumps(results, indent=2))
           PY
+
