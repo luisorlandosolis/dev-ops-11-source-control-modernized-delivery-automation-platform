@@ -16,15 +16,21 @@ jobs:
         run: |
           curl -LO "https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl"
           chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/kubectl 2>/dev/null || true
-          ./kubectl version --client || kubectl version --client
+
+          if command -v sudo >/dev/null 2>&1; then
+            sudo mv kubectl /usr/local/bin/kubectl
+          else
+            mv kubectl /usr/local/bin/kubectl
+          fi
+
+          kubectl version --client
 
       - name: Discover Certificates
         run: |
           TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
           API_SERVER="https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}"
 
-          ./kubectl \
+          kubectl \
             --server="$API_SERVER" \
             --token="$TOKEN" \
             --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
