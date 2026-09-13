@@ -19,4 +19,4 @@ jobs:
       - name: Check WireGuard Status
         run: |
           echo "===== WireGuard Status ====="
-          wg show
+          sudo wg show
