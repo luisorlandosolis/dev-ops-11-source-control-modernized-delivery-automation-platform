@@ -16,13 +16,34 @@ jobs:
       - name: Show Date
         run: date
 
-      - name: Read Vault Inventory
+      - name: Enumerate WireGuard Inventory
         run: |
-          echo "===== Vault Inventory Validation ====="
+          echo "===== WireGuard Inventory ====="
 
           ansible-vault view ~/ansible/inventory.ini \
-            --vault-password-file ~/.vault_pass | \
-            grep "^\[wg_"
+            --vault-password-file ~/.vault_pass > /tmp/inventory.txt
+
+          echo ""
+          echo "SERVERS"
+          echo "-------"
+
+          awk '
+          /^\[wg_servers\]/ {s=1; next}
+          /^\[/ {if(s){exit}}
+          s && NF {print}
+          ' /tmp/inventory.txt
+
+          echo ""
+          echo "CLIENTS"
+          echo "-------"
+
+          awk '
+          /^\[wg_clients\]/ {s=1; next}
+          /^\[/ {if(s){exit}}
+          s && NF {print}
+          ' /tmp/inventory.txt
+
+          rm -f /tmp/inventory.txt
 
       - name: Check WireGuard Health
         run: |
