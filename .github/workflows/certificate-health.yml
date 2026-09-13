@@ -1,23 +1,17 @@
-name: Certificate Health
+name: ARC Kubernetes Validation
 
 on:
   workflow_dispatch:
 
 jobs:
-  certificate-health:
+  arc-validation:
     runs-on: self-hosted
 
     steps:
-      - name: Runner Validation
+      - name: Show Hostname
+        run: hostname
+
+      - name: Check Kubectl
         run: |
-          echo "===== Runner Validation ====="
-
-          hostname
-          whoami
-
-          echo ""
-          echo "===== Tool Validation ====="
-
-          which kubectl || echo "kubectl not installed"
-          which git || echo "git installed"
-          which bash || echo "bash installed"
+          which kubectl || true
+          kubectl version --client || true
