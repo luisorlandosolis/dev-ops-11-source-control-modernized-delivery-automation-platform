@@ -13,35 +13,31 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Dependencies
+      - name: ARC Environment Check
         run: |
-          apt-get update
-          apt-get install -y python3-pip
-          python3 -m pip install pyyaml
+          echo "=== USER ==="
+          whoami
 
-      - name: Infrastructure Health Check
-        run: |
-          python3 - <<'PY'
-          import yaml
-          import subprocess
-          import json
+          echo
+          echo "=== ID ==="
+          id
 
-          with open("monitoring.yml") as f:
-              data = yaml.safe_load(f)
+          echo
+          echo "=== PYTHON ==="
+          python3 --version
 
-          results = {}
+          echo
+          echo "=== PIP ==="
+          python3 -m pip --version || true
 
-          for host in data["infrastructure_targets"]:
-              name = host["name"]
-              ip = host["ip"]
+          echo
+          echo "=== SUDO ==="
+          which sudo || true
 
-              result = subprocess.run(
-                  ["ping", "-c", "1", "-W", "2", ip],
-                  capture_output=True
-              )
+          echo
+          echo "=== APT ==="
+          which apt-get || true
 
-              results[name] = "UP" if result.returncode == 0 else "DOWN"
-
-          print(json.dumps(results, indent=2))
-          PY
-
+          echo
+          echo "=== OS ==="
+          cat /etc/os-release || true
