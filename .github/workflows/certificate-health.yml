@@ -1,0 +1,23 @@
+name: Certificate Health
+
+on:
+  workflow_dispatch:
+
+jobs:
+  certificate-health:
+    runs-on: self-hosted
+
+    steps:
+      - name: ARC Runner Validation
+        run: |
+          echo "===== ARC Runner ====="
+          hostname
+          uname -a
+
+      - name: Discover Certificates
+        run: |
+          echo ""
+          echo "===== Certificate Health ====="
+          echo ""
+
+          kubectl get certificates -A
