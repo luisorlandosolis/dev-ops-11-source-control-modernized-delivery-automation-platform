@@ -8,16 +8,16 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: ARC Runner Validation
+      - name: Runner Validation
         run: |
-          echo "===== ARC Runner ====="
+          echo "===== Runner Validation ====="
+
           hostname
-          uname -a
+          whoami
 
-      - name: Discover Certificates
-        run: |
           echo ""
-          echo "===== Certificate Health ====="
-          echo ""
+          echo "===== Tool Validation ====="
 
-          kubectl get certificates -A
+          which kubectl || echo "kubectl not installed"
+          which git || echo "git installed"
+          which bash || echo "bash installed"
