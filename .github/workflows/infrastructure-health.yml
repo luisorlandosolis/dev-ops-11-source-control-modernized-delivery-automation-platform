@@ -10,30 +10,40 @@ jobs:
       - arc
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Read monitoring targets
+      - name: Python Check
+        run: |
+          python3 --version
+          python3 -m pip --version
+
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --user pyyaml
+
+      - name: Infrastructure Health Check
         run: |
           python3 - <<'PY'
           import yaml
           import subprocess
           import json
 
-          with open('/home/orlando/ansible/monitoring.yml') as f:
+          with open("monitoring.yml") as f:
               data = yaml.safe_load(f)
 
           results = {}
 
-          for host in data['infrastructure_targets']:
-              name = host['name']
-              ip = host['ip']
+          for host in data["infrastructure_targets"]:
+              name = host["name"]
+              ip = host["ip"]
 
               result = subprocess.run(
-                  ['ping', '-c', '1', '-W', '2', ip],
+                  ["ping", "-c", "1", "-W", "2", ip],
                   capture_output=True
               )
 
-              results[name] = 'UP' if result.returncode == 0 else 'DOWN'
+              results[name] = "UP" if result.returncode == 0 else "DOWN"
 
           print(json.dumps(results, indent=2))
           PY
