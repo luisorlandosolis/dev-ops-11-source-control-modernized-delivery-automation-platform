@@ -1,22 +1,22 @@
-name: WireGuard Health
-
-on:
-  workflow_dispatch:
-
-jobs:
-  wireguard-health:
-    runs-on:
-      - self-hosted
-      - jumpbox
-
-    steps:
-      - name: Show Hostname
-        run: hostname
-
-      - name: Show Date
-        run: date
-
-      - name: Check WireGuard Status
+      - name: Check WireGuard Health
         run: |
-          echo "===== WireGuard Status ====="
-          sudo wg show
+          echo "===== WireGuard Health ====="
+
+          LAST_HANDSHAKE=$(sudo wg show wg0 latest-handshakes | awk '{print $2}')
+
+          NOW=$(date +%s)
+          AGE=$((NOW - LAST_HANDSHAKE))
+
+          echo "Last Handshake Age: ${AGE} seconds"
+
+          if [ "$LAST_HANDSHAKE" = "0" ]; then
+            echo "STATUS: CRITICAL - No handshake"
+            exit 1
+          elif [ $AGE -lt 300 ]; then
+            echo "STATUS: HEALTHY"
+          elif [ $AGE -lt 900 ]; then
+            echo "STATUS: WARNING"
+          else
+            echo "STATUS: CRITICAL"
+            exit 1
+          fi
