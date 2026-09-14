@@ -56,14 +56,42 @@ jobs:
 
           echo "Last Handshake Age: ${AGE} seconds"
 
+          mkdir -p ~/monitoring
+
           if [ "$LAST_HANDSHAKE" = "0" ]; then
-            echo "STATUS: CRITICAL - No handshake"
+            STATUS="CRITICAL"
+
+            echo "STATUS: $STATUS"
+
+            echo "{\"status\":\"$STATUS\",\"age\":$AGE}" \
+              > ~/monitoring/wireguard-health.json
+
             exit 1
+
           elif [ $AGE -lt 300 ]; then
-            echo "STATUS: HEALTHY"
+            STATUS="HEALTHY"
+
+            echo "STATUS: $STATUS"
+
+            echo "{\"status\":\"$STATUS\",\"age\":$AGE}" \
+              > ~/monitoring/wireguard-health.json
+
           elif [ $AGE -lt 900 ]; then
-            echo "STATUS: WARNING"
+            STATUS="WARNING"
+
+            echo "STATUS: $STATUS"
+
+            echo "{\"status\":\"$STATUS\",\"age\":$AGE}" \
+              > ~/monitoring/wireguard-health.json
+
           else
-            echo "STATUS: CRITICAL"
+            STATUS="CRITICAL"
+
+            echo "STATUS: $STATUS"
+
+            echo "{\"status\":\"$STATUS\",\"age\":$AGE}" \
+              > ~/monitoring/wireguard-health.json
+
             exit 1
           fi
+
