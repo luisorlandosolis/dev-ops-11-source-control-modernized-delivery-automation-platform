@@ -36,8 +36,6 @@ This project introduces GitHub-native automation while leveraging the existing K
 
 ### Primary Objectives
 
-### Primary Objectives
-
 - Implement GitHub Actions workflow automation
 - Implement branch-based source control governance and validation workflows
 - Integrate GitHub with Kubernetes
@@ -205,11 +203,17 @@ Workflow Execution
 
 ### Monitoring Foundation
 
-- Infrastructure health monitoring validated
-- Certificate discovery validated
-- monitoring.yml architecture established
-- Dynamic runner monitoring workflows validated
-- Grafana integration planned
+Validated monitoring capabilities include:
+
+- Infrastructure health monitoring
+- Certificate discovery workflows
+- Static GitHub Actions agent monitoring
+- Configuration-driven monitoring
+- GitHub Actions monitoring execution
+- ARC-based monitoring execution
+- Monitoring source-of-truth architecture
+
+These capabilities establish the foundation for future Grafana dashboards, operational visibility, and Security Action Center development.
 
 ### Completed
 
@@ -247,21 +251,6 @@ Workflow Execution
 - GitOps workflows
 - ArgoCD integration
 ---
-
-### Monitoring Foundation
-
-The platform successfully established a monitoring framework designed to support future observability initiatives.
-
-Validated capabilities include:
-
-- Infrastructure health validation
-- Certificate discovery validation
-- Dynamic runner monitoring workflows
-- Configuration-driven monitoring
-- GitHub Actions monitoring execution
-- ARC-based monitoring execution
-
-The monitoring architecture provides the foundation for future Grafana dashboards, operational visibility, and Security Action Center development.
 
 ## Runner Strategy
 
@@ -464,6 +453,25 @@ Static Runner
 SSH
     ↓
 Kubernetes Administration
+```
+
+#### Dynamic Runner Validation Path
+
+```text
+Git Push
+    ↓
+GitHub Actions
+    ↓
+GitHub App
+    ↓
+ARC Controller
+    ↓
+Dynamic Runner
+    ↓
+Kubernetes Execution
+    ↓
+Successful Job Completion
+```
 
 Result:
 
@@ -500,13 +508,14 @@ Result:
 - Certificate management platform deployed
 - Secure credential integration validated
 
-### Monitoring Foundation
+### Monitoring & Observability
 
 - Infrastructure health monitoring implemented
 - Certificate discovery workflows implemented
+- Static GitHub Actions agent monitoring implemented
 - Configuration-driven monitoring architecture established
 - Monitoring source-of-truth architecture implemented
-- Foundation established for future Grafana visualization
+- Grafana dashboard foundation established
 
 ### Platform Engineering Outcomes
 
