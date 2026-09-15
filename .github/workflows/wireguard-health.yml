@@ -16,6 +16,18 @@ jobs:
       - name: Show Date
         run: date
 
+      - name: Set Static Agent Running Status
+        run: |
+          mkdir -p ~/monitoring
+
+          cat > ~/monitoring/static-agent-status.json <<EOF
+          {
+            "agent": "static",
+            "status": "RUNNING",
+            "last_run": "in_progress"
+          }
+          EOF
+
       - name: Enumerate WireGuard Inventory
         run: |
           echo "===== WireGuard Inventory ====="
