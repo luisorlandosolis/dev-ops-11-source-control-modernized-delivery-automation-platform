@@ -19,6 +19,15 @@ jobs:
           echo "Runner validation successful"
           uname -a || ver
 
+      - name: CPU Activity Test
+        run: |
+          echo "Starting CPU test"
+          yes > /dev/null &
+          PID=$!
+          sleep 120
+          kill $PID
+          echo "CPU test complete"
+
       - name: Certificate Audit Placeholder
         run: |
           echo "Certificate audit workflow triggered"
