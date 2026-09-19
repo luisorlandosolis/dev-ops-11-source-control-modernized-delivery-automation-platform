@@ -1,4 +1,3 @@
-# Dev-Ops-11 Source Control & Modernized Delivery Automation Platform
 # Dev-Ops-11: Source Control & Modernized Delivery Automation Platform
 
 ## Final Platform Architecture
