@@ -1,3 +1,7 @@
+# Public portfolio example
+# Environment-specific usernames, hostnames, and IP addresses
+# have been sanitized for publication.
+
 name: Kubernetes Discovery
 
 on:
@@ -15,7 +19,7 @@ jobs:
         run: whoami
 
       - name: Show Kubernetes Nodes
-        run: ssh orlando@192.168.1.210 "kubectl get nodes"
+        run: ssh automation-user@kubernetes-management-host "kubectl get nodes"
 
       - name: Show All Pods
-        run: ssh orlando@192.168.1.210 "kubectl get pods -A"
+        run: ssh automation-user@kubernetes-management-host "kubectl get pods -A"
